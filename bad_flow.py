@@ -27,5 +27,4 @@ response = r.json()
 print("Doja Cat's last Ten Released Albums")
 print("-----------------------------------")
 for info in response['items']:
-        print(info['name']+' was released on '+info['release_date'] + 
-              " with " + str(info['total_tracks']) + ' total tracks.')
+    print(info['name'] + ' was released on ' + info['release_date'] + " with " + str(info['total_tracks']) + ' total tracks.')
