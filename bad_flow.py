@@ -9,7 +9,7 @@ AUTH_URL = 'https://accounts.spotify.com/api/token'
 auth_response = requests.post(AUTH_URL, {
   'grant_type': 'client_credentials',
   'client_id': CLIENT_ID,
-  'client_secret':CLIENT_SECRET,
+  'client_secret': CLIENT_SECRET,
 })
 
 auth_response_data = auth_response.json()
@@ -27,5 +27,5 @@ response = r.json()
 print("Doja Cat's last Ten Released Albums")
 print("-----------------------------------")
 for info in response['items']:
-  print(info['name']+' was released on '+info['release_date'] + " with " 
-        + str(info['total_tracks']) + ' total tracks.')
+        print(info['name']+' was released on '+info['release_date'] + 
+              " with " + str(info['total_tracks']) + ' total tracks.')
