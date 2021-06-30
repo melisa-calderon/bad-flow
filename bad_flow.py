@@ -57,7 +57,7 @@ def displayAlbum(title, response):
 # Test  2: check if json worked
 def convertToJsonTrack(BASE_URL, artist_id):
     track = requests.get(BASE_URL + 'artists/' + artist_id
-                          + '/top-tracks?market=us', headers=headers)
+                      + '/top-tracks?market=us', headers=headers)
     return track.json()
 
 
@@ -78,6 +78,7 @@ def displayTopTracks(title, tracks):
             print(t['name'] + ' which has a popularity of '
                   + str(t['popularity']))
     return top_tracks
+
 
 # Test  1: display correct info
 def convertToDataFrame(top_tracks):
