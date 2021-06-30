@@ -25,6 +25,7 @@ headers = {
 artist_id = '5cj0lLjcoR7YOSnhnX0Po5'
 BASE_URL = 'https://api.spotify.com/v1/'
 title = "Doja Cat's last Ten Released Albums"
+ntitle = 'Top Tracks in the US'
 
 
 # Test  1: check if artist_id is not vaild
@@ -91,6 +92,5 @@ def convertToDataFrame(top_tracks):
 response = convertToJson(BASE_URL, artist_id)
 displayAlbum(title, response)
 tracks = convertToJsonTrack(BASE_URL, artist_id)
-ntitle = 'Top Tracks in the US'
 top_tracks = displayTopTracks(ntitle, tracks)
 convertToDataFrame(top_tracks)
