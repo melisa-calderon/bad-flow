@@ -26,24 +26,24 @@ artist_id = '5cj0lLjcoR7YOSnhnX0Po5'
 BASE_URL = 'https://api.spotify.com/v1/'
 title = "Doja Cat's last Ten Released Albums"
 
-#Test  1: check if artist_id is not vaild
-#Test  2: check if base url is vaild
-#Test  2: check if json worked
+# Test  1: check if artist_id is not vaild
+# Test  2: check if base url is vaild
+# Test  2: check if json worked
 def convertToJson(BASE_URL, artist_id):
         r = requests.get(BASE_URL + 'artists/' + artist_id + '/albums',
-                       headers=headers, params={'limit': 10})
+                         headers=headers, params={'limit': 10})
         return r.json()
 
-response = convertToJson(BASE_URL, artist_id)
 
-#Test  1: Check if display looks like its supposed to
+# Test  1: Check if display looks like its supposed to
 def displayTitle(title):
         print(title)
         print('-' * len(title))
 
-#Test  1: check if the title is displayed correctly
-#Test  2: check if response is in correct format
-#Test  2: check if print is printed correctly
+
+# Test  1: check if the title is displayed correctly
+# Test  2: check if response is in correct format
+# Test  2: check if print is printed correctly
 def displayAlbum(title, response):
         displayTitle(title)
         for info in response['items']:
@@ -51,23 +51,18 @@ def displayAlbum(title, response):
                   + " with " + str(info['total_tracks']) + ' total tracks.')
 
 
-displayAlbum(title, response)
-
-#Test  1: check if artist_id is not vaild
-#Test  2: check if base url is vaild
-#Test  2: check if json worked
+# Test  1: check if artist_id is not vaild
+# Test  2: check if base url is vaild
+# Test  2: check if json worked
 def convertToJsonTrack(BASE_URL, artist_id):
         track = requests.get(BASE_URL + 'artists/' + artist_id
                             + '/top-tracks?market=us', headers=headers)
         return track.json()
 
 
-tracks = convertToJsonTrack(BASE_URL, artist_id)
-ntitle = 'Top Tracks in the US'
-
-#Test  1: check if the title is displayed correctly
-#Test  2: check if response is in correct format
-#Test  2: check if print is printed correctly
+# Test  1: check if the title is displayed correctly
+# Test  2: check if response is in correct format
+# Test  2: check if print is printed correctly
 def displayTopTracks(title, tracks):
         displayTitle(title)
         top_tracks = {}
@@ -76,13 +71,13 @@ def displayTopTracks(title, tracks):
             top_tracks[i]= [t['name'], t['explicit'], t['popularity']]
             i += 1
             if t['explicit']:
-                print(t['name'] + ' which has a popularity of ' + str(t['popularity'])
-                      + ' and is explicit.')
+                print(t['name'] + ' which has a popularity of ' 
+                      + str(t['popularity']) + ' and is explicit.')
             else:
-                print(t['name'] + ' which has a popularity of ' + str(t['popularity']))
+                print(t['name'] + ' which has a popularity of ' 
+                      + str(t['popularity']))
         return top_tracks
 
-top_tracks = displayTopTracks(ntitle, tracks)
 
 def convertToDataFrame(top_tracks):
         df = pd.DataFrame.from_dict(top_tracks, orient = 'index',
@@ -90,5 +85,10 @@ def convertToDataFrame(top_tracks):
         engine = create_engine('mysql://root:codio@localhost/spotifydoja')
         df.to_sql('Top_Tracks', con=engine, if_exists='replace', index=False)
 
-convertToDataFrame(top_tracks)
 
+response = convertToJson(BASE_URL, artist_id)
+displayAlbum(title, response)
+tracks = convertToJsonTrack(BASE_URL, artist_id)
+ntitle = 'Top Tracks in the US'
+top_tracks = displayTopTracks(ntitle, tracks)
+convertToDataFrame(top_tracks)
