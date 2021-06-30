@@ -31,9 +31,9 @@ title = "Doja Cat's last Ten Released Albums"
 # Test  2: check if base url is vaild
 # Test  2: check if json worked
 def convertToJson(BASE_URL, artist_id):
-      r = requests.get(BASE_URL + 'artists/' + artist_id + '/albums',
-                        headers=headers, params={'limit': 10})
-      return r.json()
+    r = requests.get(BASE_URL + 'artists/' + artist_id + '/albums',
+                     headers=headers, params={'limit': 10})
+    return r.json()
 
 
 # Test  1: Check if display looks like its supposed to
