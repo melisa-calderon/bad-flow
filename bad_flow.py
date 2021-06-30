@@ -23,9 +23,23 @@ BASE_URL = 'https://api.spotify.com/v1/'
 r = requests.get(BASE_URL + 'artists/' + artist_id + '/albums',
                  headers=headers, params={'limit': 10})
 response = r.json()
-
-print("Doja Cat's last Ten Released Albums")
-print("-----------------------------------")
+title ="Doja Cat's last Ten Released Albums"
+print(title)
+print('-' * len(title))
 for info in response['items']:
-    print(info['name'] + ' was released on ' + info['release_date'] + 
-          " with " + str(info['total_tracks']) + ' total tracks.')
+    print(info['name'] + ' was released on ' + info['release_date']
+          + " with " + str(info['total_tracks']) + ' total tracks.')
+
+track = requests.get(BASE_URL + 'artists/' + artist_id + '/top-tracks?market=us',
+                  headers=headers)
+tracks = track.json()
+ntitle = 'Top Tracks in the US'
+print(ntitle)
+print('-' * len(ntitle))
+#print(tracks)
+for t in tracks['tracks']:
+    if t['explicit']:
+        print(t['name'] + ' which has a popularity of ' + str(t['popularity'])
+              + ' and is explicit.')
+    else:
+        print(t['name'] + ' which has a popularity of ' + str(t['popularity']))
