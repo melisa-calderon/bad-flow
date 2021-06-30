@@ -1,5 +1,9 @@
+from sqlalchemy import create_engine
 import requests
 import spotipy
+import pandas as pd
+import sqlalchemy 
+
 
 CLIENT_ID = '7bb5a610971f437690b91981206e0025'
 CLIENT_SECRET = 'f102316e6e7b45bd93e1988be3162cf6'
@@ -36,9 +40,18 @@ tracks = track.json()
 ntitle = 'Top Tracks in the US'
 print(ntitle)
 print('-' * len(ntitle))
+top_tracks = {}
+i =0
 for t in tracks['tracks']:
+    top_tracks[i] = [t['name'], t['explicit'], t['popularity']]
+    i += 1
     if t['explicit']:
         print(t['name'] + ' which has a popularity of ' + str(t['popularity'])
               + ' and is explicit.')
     else:
         print(t['name'] + ' which has a popularity of ' + str(t['popularity']))
+
+df = pd.DataFrame.from_dict(top_tracks, orient = 'index', columns=['Track_Name', 'Explicit', 'Popularity'])
+
+engine = create_engine('mysql://root:codio@localhost/spotifydoja')
+df.to_sql('Top_Tracks', con=engine, if_exists='replace', index=False)
