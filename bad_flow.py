@@ -57,7 +57,7 @@ def displayAlbum(title, response):
 # Test  2: check if json worked
 def convertToJsonTrack(BASE_URL, artist_id):
         track = requests.get(BASE_URL + 'artists/' + artist_id
-                            + '/top-tracks?market=us', headers=headers)
+                                + '/top-tracks?market=us', headers=headers)
         return track.json()
 
 
@@ -75,13 +75,13 @@ def displayTopTracks(title, tracks):
                 print(t['name'] + ' which has a popularity of '
                       + str(t['popularity']) + ' and is explicit.')
             else:
-                print(t['name'] + ' which has a popularity of ' 
+                print(t['name'] + ' which has a popularity of '
                       + str(t['popularity']))
         return top_tracks
 
 
 def convertToDataFrame(top_tracks):
-        df = pd.DataFrame.from_dict(top_tracks, orient= 'index', columns=[
+        df = pd.DataFrame.from_dict(top_tracks, orient='index', columns=[
           'Track_Name', 'Explicit', 'Popularity'])
         engine = create_engine('mysql://root:codio@localhost/spotifydoja')
         df.to_sql('Top_Tracks', con=engine, if_exists='replace', index=False)
