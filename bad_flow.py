@@ -30,13 +30,12 @@ for info in response['items']:
     print(info['name'] + ' was released on ' + info['release_date']
           + " with " + str(info['total_tracks']) + ' total tracks.')
 
-track = requests.get(BASE_URL + 'artists/' + artist_id + '/top-tracks?market=us',
-                  headers=headers)
+track = requests.get(BASE_URL + 'artists/' + artist_id 
+                     + '/top-tracks?market=us', headers=headers)
 tracks = track.json()
 ntitle = 'Top Tracks in the US'
 print(ntitle)
 print('-' * len(ntitle))
-#print(tracks)
 for t in tracks['tracks']:
     if t['explicit']:
         print(t['name'] + ' which has a popularity of ' + str(t['popularity'])
