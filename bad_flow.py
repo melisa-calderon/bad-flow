@@ -26,6 +26,7 @@ artist_id = '5cj0lLjcoR7YOSnhnX0Po5'
 BASE_URL = 'https://api.spotify.com/v1/'
 title = "Doja Cat's last Ten Released Albums"
 
+
 # Test  1: check if artist_id is not vaild
 # Test  2: check if base url is vaild
 # Test  2: check if json worked
@@ -71,7 +72,7 @@ def displayTopTracks(title, tracks):
             top_tracks[i]= [t['name'], t['explicit'], t['popularity']]
             i += 1
             if t['explicit']:
-                print(t['name'] + ' which has a popularity of ' 
+                print(t['name'] + ' which has a popularity of '
                       + str(t['popularity']) + ' and is explicit.')
             else:
                 print(t['name'] + ' which has a popularity of ' 
@@ -80,8 +81,8 @@ def displayTopTracks(title, tracks):
 
 
 def convertToDataFrame(top_tracks):
-        df = pd.DataFrame.from_dict(top_tracks, orient = 'index',
-                                    columns=['Track_Name', 'Explicit', 'Popularity'])
+        df = pd.DataFrame.from_dict(top_tracks, orient= 'index', columns=[
+          'Track_Name', 'Explicit', 'Popularity'])
         engine = create_engine('mysql://root:codio@localhost/spotifydoja')
         df.to_sql('Top_Tracks', con=engine, if_exists='replace', index=False)
 
