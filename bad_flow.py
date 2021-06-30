@@ -31,9 +31,9 @@ title = "Doja Cat's last Ten Released Albums"
 # Test  2: check if base url is vaild
 # Test  2: check if json worked
 def convertToJson(BASE_URL, artist_id):
-        r = requests.get(BASE_URL + 'artists/' + artist_id + '/albums',
-                         headers=headers, params={'limit': 10})
-        return r.json()
+      r = requests.get(BASE_URL + 'artists/' + artist_id + '/albums',
+                        headers=headers, params={'limit': 10})
+      return r.json()
 
 
 # Test  1: Check if display looks like its supposed to
@@ -57,7 +57,7 @@ def displayAlbum(title, response):
 # Test  2: check if json worked
 def convertToJsonTrack(BASE_URL, artist_id):
         track = requests.get(BASE_URL + 'artists/' + artist_id
-                                + '/top-tracks?market=us', headers=headers)
+                              + '/top-tracks?market=us', headers=headers)
         return track.json()
 
 
@@ -69,7 +69,7 @@ def displayTopTracks(title, tracks):
         top_tracks = {}
         i = 0
         for t in tracks['tracks']:
-            top_tracks[i]= [t['name'], t['explicit'], t['popularity']]
+            top_tracks[i] = [t['name'], t['explicit'], t['popularity']]
             i += 1
             if t['explicit']:
                 print(t['name'] + ' which has a popularity of '
