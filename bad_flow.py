@@ -1,4 +1,5 @@
 import requests
+import os
 import spotipy
 import pandas as pd
 import sqlalchemy
@@ -93,9 +94,15 @@ def convertToDataFrame(top_tracks):
     return df
 
 
+def createEngine(database_name):
+    engine = create_engine('mysql://root:codio@localhost/{}'.format(database_name))
+    return engine
+
+
+
 def createTable(database_name, top_tracks, table_name):
     df = convertToDataFrame(top_tracks)
-    engine = create_engine('mysql://root:codio@localhost/{}'.format(database_name))
+    engine = createEngine(database_name)
     df.to_sql(table_name, con=engine, if_exists='replace', index=False)
 
 
@@ -105,18 +112,21 @@ def histogram(dataframe, c_name):
 
 
 def saveSQLtoFile(database_name, file_name):
-    os.system('mysqldump -u root -pcodio '+database_name+' > ' + file_name)
+    os.system('mysqldump -u root -pcodio '+ database_name +' > ' + file_name)
 
 
 def loadSQLfromFile(database_name, file_name):
-    os.system('mysql -u root -pcodio -e "CREATE DATABASE IF NOT EXISTS '+database_name+';"')
-    os.system('mysql -u root -pcodio ' +database_name+' < '+file_name)
+    os.system('mysql -u root -pcodio -e "CREATE DATABASE IF NOT EXISTS '+ database_name +';"')
+    os.system('mysql -u root -pcodio ' + database_name +' < '+ file_name)
 
-    
+
 def loadDataset(database_name, table_name, file_name, update=False):
     loadSQLfromFile(database_name, file_name)
-    df = pd.read_sql_table(table_name, co)
-    
+    df = pd.read_sql_table(table_name, con=createEngine(database_name))
+    if update:
+      return loadNewData(df)
+    else:
+      return df
 
 CLIENT_ID = '7bb5a610971f437690b91981206e0025'
 CLIENT_SECRET = 'f102316e6e7b45bd93e1988be3162cf6'
@@ -129,9 +139,10 @@ ntitle = 'Top Tracks in the US'
 database_name = 'spotifydoja'
 tracks = convertToJsonTrack(BASE_URL, artist_id, AUTH_URL, CLIENT_ID, CLIENT_SECRET)
 response = convertToJson(BASE_URL, artist_id, AUTH_URL, CLIENT_ID, CLIENT_SECRET)
-
+file_name = 'spotifydata.sql'
 displayAlbum(title, response)
 top_tracks = displayTopTracks(ntitle, tracks)
 dataframe = convertToDataFrame(top_tracks)
 createTable(database_name, top_tracks, table_name)
-#histogram(dataframe,'Popularity')
+df = loadDataset(database_name, table_name, file_name)
+# histogram(df,'Popularity')
