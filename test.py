@@ -23,14 +23,12 @@ class TestFileName(unittest.TestCase):
                                     'f102316e6e7b45bd93e1988be3162')
         self.assertNotEqual(response3.status_code, 200)
 
-
     def test_convertToJson(self):
         tracks = convertToJson('https://api.spotify.com/v1/',
                                '5cj0lLjcoR7YOSnhnX0Po5',
                                AUTH_URL, CLIENT_ID, CLIENT_SECRET)
         self.assertNotEqual(tracks, None)
         # self.assertEqual(tracks[] == )
-
 
 if __name__ == '__main__':
     unittest.main()
