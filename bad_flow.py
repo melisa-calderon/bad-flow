@@ -7,7 +7,10 @@ from sqlalchemy import create_engine
 import matplotlib
 import matplotlib.pyplot as plt
 
-
+# Test  1: check if getAuthresponse status_code is 200; if everything is correct
+# Test  2: check if getAuthresponse status_code is not 200; if the AUTH_URL is incorrect
+# Test  3: check if getAuthresponse status_code is not 200; if CLIENT_ID is incorrect
+# Test  4: check if getAuthresponse status_code is not 200; if CLIENT_SECRET is incorrect
 def getAuthresponse(AUTH_URL, CLIENT_ID, CLIENT_SECRET):
     auth_response = requests.post(AUTH_URL, {
       'grant_type': 'client_credentials',
@@ -34,7 +37,7 @@ def getHeader(AUTH_URL, CLIENT_ID, CLIENT_SECRET):
 
 # Test  1: check if artist_id is not vaild
 # Test  2: check if base url is vaild
-# Test  2: check if json worked
+# Test  3: check if json worked
 def convertToJson(BASE_URL, artist_id, AUTH_URL, CLIENT_ID, CLIENT_SECRET):
     headers = getHeader(AUTH_URL, CLIENT_ID, CLIENT_SECRET)
     r = requests.get(BASE_URL + 'artists/' + artist_id + '/albums',
@@ -42,16 +45,13 @@ def convertToJson(BASE_URL, artist_id, AUTH_URL, CLIENT_ID, CLIENT_SECRET):
     return r.json()
 
 
-# Test  1: Check if display looks like its supposed to
 def displayTitle(title):
     print(title)
     print('-' * len(title))
 
 
-# Test  1: check if the title is displayed correctly
-# Test  2: check if response is in correct format
-# Test  2: check if print is printed correctly
-def displayAlbumT(title, response):
+
+def displayAlbum(title, response):
     displayTitle(title)
     for info in response['items']:
         print(info['name'] + ' was released on ' + info['release_date']
@@ -61,7 +61,7 @@ def displayAlbumT(title, response):
 # Test  1: check if artist_id is not vaild
 # Test  2: check if base url is vaild
 # Test  2: check if json worked
-def convertToJson(BASE_URL, artist_id, AUTH_URL, CLIENT_ID, CLIENT_SECRET):
+def convertToJsonT(BASE_URL, artist_id, AUTH_URL, CLIENT_ID, CLIENT_SECRET):
     headers = getHeader(AUTH_URL, CLIENT_ID, CLIENT_SECRET)
     track = requests.get(BASE_URL + 'artists/' + artist_id
                          + '/top-tracks?market=us', headers=headers)
@@ -111,12 +111,13 @@ def histogram(dataframe, c_name):
 
 
 def saveSQLtoFile(database_name, file_name):
-    os.system('mysqldump -u root -pcodio ' + database_name +' > ' + file_name)
+    os.system('mysqldump -u root -pcodio ' + database_name + ' > ' + file_name)
 
 
 def loadSQLfromFile(database_name, file_name):
-    os.system('mysql -u root -pcodio -e "CREATE DATABASE IF NOT EXISTS '+ database_name +';"')
-    os.system('mysql -u root -pcodio ' + database_name +' < '+ file_name)
+    os.system('mysql -u root -pcodio -e "CREATE DATABASE IF NOT EXISTS '
+              + database_name + ';"')
+    os.system('mysql -u root -pcodio ' + database_name + ' < ' + file_name)
 
 
 def loadDataset(database_name, table_name, file_name, update=False):
@@ -128,6 +129,8 @@ def loadDataset(database_name, table_name, file_name, update=False):
         return df
 
 
+# assigning variables
+
 CLIENT_ID = '7bb5a610971f437690b91981206e0025'
 CLIENT_SECRET = 'f102316e6e7b45bd93e1988be3162cf6'
 AUTH_URL = 'https://accounts.spotify.com/api/token'
@@ -137,12 +140,17 @@ BASE_URL = 'https://api.spotify.com/v1/'
 title = "Doja Cat's last Ten Released Albums"
 ntitle = 'Top Tracks in the US'
 database_name = 'spotifydoja'
-tracks = convertToJsonT(BASE_URL, artist_id, AUTH_URL, CLIENT_ID, CLIENT_SECRET)
-response = convertToJson(BASE_URL, artist_id, AUTH_URL, CLIENT_ID, CLIENT_SECRET)
+
+
+tracks = convertToJsonT(BASE_URL, artist_id, AUTH_URL, CLIENT_ID,
+                        CLIENT_SECRET)
+response = convertToJson(BASE_URL, artist_id, AUTH_URL, CLIENT_ID,
+                         CLIENT_SECRET)
 file_name = 'spotifydata.sql'
 displayAlbum(title, response)
 top_tracks = displayTopTracks(ntitle, tracks)
+loadSQLfromFile(database_name, file_name)
 dataframe = convertToDataFrame(top_tracks)
 createTable(database_name, top_tracks, table_name)
 df = loadDataset(database_name, table_name, file_name)
-# histogram(df,'Popularity')
+print(tracks) # histogram(df,'Popularity')
