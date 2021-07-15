@@ -7,10 +7,11 @@ from sqlalchemy import create_engine
 import matplotlib
 import matplotlib.pyplot as plt
 
-# Test  1: check if getAuthresponse status_code is 200; if everything is correct
-# Test  2: check if getAuthresponse status_code is not 200; if the AUTH_URL is incorrect
-# Test  3: check if getAuthresponse status_code is not 200; if CLIENT_ID is incorrect
-# Test  4: check if getAuthresponse status_code is not 200; if CLIENT_SECRET is incorrect
+
+# Test  1: status_code is 200; if everything is correct
+# Test  2: status_code is not 200; if the AUTH_URL is incorrect
+# Test  3: status_code is not 200; if CLIENT_ID is incorrect
+# Test  4: status_code is not 200; if CLIENT_SECRET is incorrect
 def getAuthresponse(AUTH_URL, CLIENT_ID, CLIENT_SECRET):
     auth_response = requests.post(AUTH_URL, {
       'grant_type': 'client_credentials',
@@ -48,7 +49,6 @@ def convertToJson(BASE_URL, artist_id, AUTH_URL, CLIENT_ID, CLIENT_SECRET):
 def displayTitle(title):
     print(title)
     print('-' * len(title))
-
 
 
 def displayAlbum(title, response):
@@ -95,7 +95,8 @@ def convertToDataFrame(top_tracks):
 
 
 def createEngine(database_name):
-    engine = create_engine('mysql://root:codio@localhost/{}'.format(database_name))
+    engine = create_engine(
+      'mysql://root:codio@localhost/{}'.format(database_name))
     return engine
 
 
@@ -153,4 +154,5 @@ loadSQLfromFile(database_name, file_name)
 dataframe = convertToDataFrame(top_tracks)
 createTable(database_name, top_tracks, table_name)
 df = loadDataset(database_name, table_name, file_name)
-print(tracks) # histogram(df,'Popularity')
+print(tracks)
+# histogram(df,'Popularity')
