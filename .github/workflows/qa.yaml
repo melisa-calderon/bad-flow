@@ -18,6 +18,7 @@ jobs:
              pip install requests
              pip install spotipy
              pip install sqlalchemy
+             pip install matplotlib
 
       - name: Test with unittest
         run: |
