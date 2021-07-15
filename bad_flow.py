@@ -51,7 +51,7 @@ def displayTitle(title):
 # Test  1: check if the title is displayed correctly
 # Test  2: check if response is in correct format
 # Test  2: check if print is printed correctly
-def displayAlbum(title, response):
+def displayAlbumT(title, response):
     displayTitle(title)
     for info in response['items']:
         print(info['name'] + ' was released on ' + info['release_date']
@@ -61,7 +61,7 @@ def displayAlbum(title, response):
 # Test  1: check if artist_id is not vaild
 # Test  2: check if base url is vaild
 # Test  2: check if json worked
-def convertToJsonTrack(BASE_URL, artist_id, AUTH_URL, CLIENT_ID, CLIENT_SECRET):
+def convertToJson(BASE_URL, artist_id, AUTH_URL, CLIENT_ID, CLIENT_SECRET):
     headers = getHeader(AUTH_URL, CLIENT_ID, CLIENT_SECRET)
     track = requests.get(BASE_URL + 'artists/' + artist_id
                          + '/top-tracks?market=us', headers=headers)
@@ -99,7 +99,6 @@ def createEngine(database_name):
     return engine
 
 
-
 def createTable(database_name, top_tracks, table_name):
     df = convertToDataFrame(top_tracks)
     engine = createEngine(database_name)
@@ -112,7 +111,7 @@ def histogram(dataframe, c_name):
 
 
 def saveSQLtoFile(database_name, file_name):
-    os.system('mysqldump -u root -pcodio '+ database_name +' > ' + file_name)
+    os.system('mysqldump -u root -pcodio ' + database_name +' > ' + file_name)
 
 
 def loadSQLfromFile(database_name, file_name):
@@ -124,9 +123,10 @@ def loadDataset(database_name, table_name, file_name, update=False):
     loadSQLfromFile(database_name, file_name)
     df = pd.read_sql_table(table_name, con=createEngine(database_name))
     if update:
-      return loadNewData(df)
+        return loadNewData(df)
     else:
-      return df
+        return df
+
 
 CLIENT_ID = '7bb5a610971f437690b91981206e0025'
 CLIENT_SECRET = 'f102316e6e7b45bd93e1988be3162cf6'
@@ -137,7 +137,7 @@ BASE_URL = 'https://api.spotify.com/v1/'
 title = "Doja Cat's last Ten Released Albums"
 ntitle = 'Top Tracks in the US'
 database_name = 'spotifydoja'
-tracks = convertToJsonTrack(BASE_URL, artist_id, AUTH_URL, CLIENT_ID, CLIENT_SECRET)
+tracks = convertToJsonT(BASE_URL, artist_id, AUTH_URL, CLIENT_ID, CLIENT_SECRET)
 response = convertToJson(BASE_URL, artist_id, AUTH_URL, CLIENT_ID, CLIENT_SECRET)
 file_name = 'spotifydata.sql'
 displayAlbum(title, response)
