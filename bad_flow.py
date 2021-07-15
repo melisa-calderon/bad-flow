@@ -150,7 +150,7 @@ response = convertToJson(BASE_URL, artist_id, AUTH_URL, CLIENT_ID,
 file_name = 'spotifydata.sql'
 displayAlbum(title, response)
 top_tracks = displayTopTracks(ntitle, tracks)
-loadSQLfromFile(database_name, file_name)
+# loadSQLfromFile(database_name, file_name)
 dataframe = convertToDataFrame(top_tracks)
 createTable(database_name, top_tracks, table_name)
 df = loadDataset(database_name, table_name, file_name)
