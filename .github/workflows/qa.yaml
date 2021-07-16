@@ -19,7 +19,6 @@ jobs:
              pip install spotipy
              pip install sqlalchemy
              pip install plotly
-             pip install mysqlclient
 
       - name: Test with unittest
         run: |

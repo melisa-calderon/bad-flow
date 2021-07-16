@@ -142,8 +142,6 @@ def main():
     title = "Doja Cat's last Ten Released Albums"
     ntitle = 'Top Tracks in the US'
     database_name = 'spotifydoja'
-
-
     tracks = convertToJsonT(BASE_URL, artist_id, AUTH_URL, CLIENT_ID,
                             CLIENT_SECRET)
     response = convertToJson(BASE_URL, artist_id, AUTH_URL, CLIENT_ID,
