@@ -1,5 +1,5 @@
 import unittest
-from bad_flow import getAuthresponse, convertToJson, convertToJsonT
+from bad_flow import getAuthresponse
 
 
 AUTH_URL = 'https://accounts.spotify.com/api/token'
@@ -23,6 +23,7 @@ class TestFileName(unittest.TestCase):
                                     'f102316e6e7b45bd93e1988be3162')
         self.assertNotEqual(response3.status_code, 200)
 
+  
 
 if __name__ == '__main__':
     unittest.main()

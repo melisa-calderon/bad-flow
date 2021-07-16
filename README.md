@@ -3,9 +3,16 @@
 
 ## Installation
 * Runs in Python 2.7
-* Run command sudo pip3 install spotipy
+* Run commands: 
+  * sudo pip install spotipy
+  * sudo pip install pandas
+  * sudo pip install requests
+  * sudo pip install spotipy
+  * sudo pip install sqlalchemy
+  * sudo pip install plotly
+      
 * To install
-  * Sudo install bad-flow 
+  * sudo install bad-flow 
 
 
 ## History
