@@ -4,8 +4,7 @@ import spotipy
 import pandas as pd
 import sqlalchemy
 from sqlalchemy import create_engine
-import matplotlib
-import matplotlib.pyplot as plt
+import plotly.express as go
 
 
 # Test  1: status_code is 200; if everything is correct
@@ -95,8 +94,8 @@ def convertToDataFrame(top_tracks):
 
 
 def createEngine(database_name):
-    engine = create_engine(
-      'mysql://root:codio@localhost/{}'.format(database_name))
+    engine = create_engine('mysql://root:codio@localhost/'
+                           + database_name + '?charset=utf8', encoding='utf-8')
     return engine
 
 
@@ -106,9 +105,12 @@ def createTable(database_name, top_tracks, table_name):
     df.to_sql(table_name, con=engine, if_exists='replace', index=False)
 
 
-def histogram(dataframe, c_name):
-    dataframe.hist(column=c_name)
-    plt.show()
+def pie(dataframe):
+    fig = go.sunburst(dataframe, path = ['Popularity','Track_Name'],
+                      values = 'Popularity',
+                      color= 'Track_Name',
+                      title = 'Percentage of the Popularity of Doja Top 10 Tracks')
+    fig.write_html('hist.html')
 
 
 def saveSQLtoFile(database_name, file_name):
@@ -150,8 +152,7 @@ response = convertToJson(BASE_URL, artist_id, AUTH_URL, CLIENT_ID,
 file_name = 'spotifydata.sql'
 displayAlbum(title, response)
 top_tracks = displayTopTracks(ntitle, tracks)
-# loadSQLfromFile(database_name, file_name)
 dataframe = convertToDataFrame(top_tracks)
 createTable(database_name, top_tracks, table_name)
 df = loadDataset(database_name, table_name, file_name)
-# histogram(df,'Popularity')
+pie(df)
