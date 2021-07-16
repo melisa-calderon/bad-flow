@@ -24,7 +24,6 @@ class TestFileName(unittest.TestCase):
                                     'f102316e6e7b45bd93e1988be3162')
         self.assertNotEqual(response3.status_code, 200)
 
-
     def test_convertToJson(self):
         json = convertToJson(BASE_URL, artist_id, AUTH_URL, CLIENT_ID,
                              CLIENT_SECRET)
@@ -34,7 +33,6 @@ class TestFileName(unittest.TestCase):
         self.assertNotEqual(json, None)
         self.assertNotEqual(json, json2)
         self.assertEqual(type(json), dict)
-
 
     def test_convertToJsonT(self):
         json = convertToJsonT(BASE_URL, artist_id, AUTH_URL, CLIENT_ID,
