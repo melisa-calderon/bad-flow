@@ -106,10 +106,9 @@ def createTable(database_name, top_tracks, table_name):
 
 
 def pie(dataframe):
-    fig = go.sunburst(dataframe, path = ['Popularity','Track_Name'],
-                      values = 'Popularity',
-                      color= 'Track_Name',
-                      title = 'Percentage of the Popularity of Doja Top 10 Tracks')
+    title = 'Percentage of the Popularity of Doja Top 10 Tracks'
+    fig = go.sunburst(dataframe, path=['Popularity', 'Track_Name'],
+                      values='Popularity', color='Track_Name', title=title)
     fig.write_html('hist.html')
 
 
