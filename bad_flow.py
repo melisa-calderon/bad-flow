@@ -131,27 +131,31 @@ def loadDataset(database_name, table_name, file_name, update=False):
         return df
 
 
-# assigning variables
+def main():
+    # assigning variables
+    CLIENT_ID = '7bb5a610971f437690b91981206e0025'
+    CLIENT_SECRET = 'f102316e6e7b45bd93e1988be3162cf6'
+    AUTH_URL = 'https://accounts.spotify.com/api/token'
+    table_name = 'Top_Tracks'
+    artist_id = '5cj0lLjcoR7YOSnhnX0Po5'
+    BASE_URL = 'https://api.spotify.com/v1/'
+    title = "Doja Cat's last Ten Released Albums"
+    ntitle = 'Top Tracks in the US'
+    database_name = 'spotifydoja'
 
-CLIENT_ID = '7bb5a610971f437690b91981206e0025'
-CLIENT_SECRET = 'f102316e6e7b45bd93e1988be3162cf6'
-AUTH_URL = 'https://accounts.spotify.com/api/token'
-table_name = 'Top_Tracks'
-artist_id = '5cj0lLjcoR7YOSnhnX0Po5'
-BASE_URL = 'https://api.spotify.com/v1/'
-title = "Doja Cat's last Ten Released Albums"
-ntitle = 'Top Tracks in the US'
-database_name = 'spotifydoja'
+
+    tracks = convertToJsonT(BASE_URL, artist_id, AUTH_URL, CLIENT_ID,
+                            CLIENT_SECRET)
+    response = convertToJson(BASE_URL, artist_id, AUTH_URL, CLIENT_ID,
+                             CLIENT_SECRET)
+    file_name = 'spotifydata.sql'
+    displayAlbum(title, response)
+    top_tracks = displayTopTracks(ntitle, tracks)
+    dataframe = convertToDataFrame(top_tracks)
+    createTable(database_name, top_tracks, table_name)
+    df = loadDataset(database_name, table_name, file_name)
+    pie(df)
 
 
-tracks = convertToJsonT(BASE_URL, artist_id, AUTH_URL, CLIENT_ID,
-                        CLIENT_SECRET)
-response = convertToJson(BASE_URL, artist_id, AUTH_URL, CLIENT_ID,
-                         CLIENT_SECRET)
-file_name = 'spotifydata.sql'
-displayAlbum(title, response)
-top_tracks = displayTopTracks(ntitle, tracks)
-dataframe = convertToDataFrame(top_tracks)
-createTable(database_name, top_tracks, table_name)
-df = loadDataset(database_name, table_name, file_name)
-pie(df)
+if __name__ == "__main__":
+    main()
