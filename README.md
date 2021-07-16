@@ -21,7 +21,7 @@
 ## Contact Information
 Name         | Email
 ------------ | -------------------------
-Melisa       | melisa1101@gmail.com
+Melisa       | melisac1101@gmail.com
 
 ## License
 [GNU GPL](license)
