@@ -7,6 +7,7 @@ CLIENT_ID = '7bb5a610971f437690b91981206e0025'
 CLIENT_SECRET = 'f102316e6e7b45bd93e1988be3162cf6'
 artist_id = '5cj0lLjcoR7YOSnhnX0Po5'
 
+
 class TestFileName(unittest.TestCase):
 
     def test_getAuthresponse(self):
@@ -29,7 +30,7 @@ class TestFileName(unittest.TestCase):
                              CLIENT_SECRET)
         # other artist
         json2 = convertToJson(BASE_URL, '0cGUm45nv7Z6M6qdXYQGTX', AUTH_URL,
-                               CLIENT_ID, CLIENT_SECRET)
+                              CLIENT_ID, CLIENT_SECRET)
         self.assertNotEqual(json, None)
         self.assertNotEqual(json, json2)
         self.assertEqual(type(json), dict)
